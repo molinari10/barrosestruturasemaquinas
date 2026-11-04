@@ -190,7 +190,10 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 .deliveries .copy p {
   text-align: justify;
   text-align-last: start;
-  hyphens: auto;
+  -webkit-hyphens: none;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 .company-copy p { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.75; }
 .company-copy p + p { margin-top: 18px; }

@@ -206,11 +206,16 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 .company-copy p + p { margin-top: 18px; }
 .company-copy strong { color: var(--ink); font-weight: 700; }
 
-.contact { padding-top: 48px; padding-bottom: 52px; background: var(--blue); color: var(--white); }
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 32px clamp(28px, 5vw, 72px); padding-top: 48px; padding-bottom: 52px; background: var(--blue); color: var(--white); }
 .contact h2 { color: var(--white); margin: 0 0 28px; font-size: var(--title-section); line-height: 1.08; }
 .contact h2 em { color: inherit; }
 .contact .button-primary { background: var(--white); color: var(--blue); }
 .contact .button-primary:hover { background: var(--blue-soft); }
+.contact-location h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.25; }
+.contact-location address { margin-bottom: 18px; color: var(--blue-soft); font-style: normal; line-height: 1.6; }
+.contact-directions { border: 1px solid currentColor; color: var(--white); }
+.contact-directions:hover { background: var(--blue-hover); }
+.contact-map { display: block; grid-column: 1 / -1; width: 100%; height: clamp(320px, 42vw, 500px); border: 0; border-radius: 12px; background: var(--blue-soft); }
 .contact :focus-visible, .site-footer :focus-visible { outline-color: var(--white); }
 .site-footer { padding-top: 0; padding-bottom: 24px; background: var(--blue); color: var(--white); }
 .contact-photo { height: clamp(200px, 36vw, 380px); margin: 0; overflow: hidden; border-radius: 10px; background: var(--blue-hover); }
@@ -341,7 +346,7 @@ h1 em, h2 em { color: inherit; font-style: normal; }
   .company-gallery-stage { aspect-ratio: 4 / 3; }
   .company-thumbnails { gap: 7px; margin-top: 7px; }
   .company-copy p + p { margin-top: 16px; }
-  .contact { padding-top: 40px; padding-bottom: 40px; }
+  .contact { grid-template-columns: 1fr; padding-top: 40px; padding-bottom: 40px; }
   .site-footer { padding-bottom: 18px; }
   .contact h2 { font-size: clamp(32px, 8vw, 38px); }
   .contact .button { max-width: 100%; }

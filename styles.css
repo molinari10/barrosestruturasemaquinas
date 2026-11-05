@@ -43,9 +43,9 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 }
 .brand { display: inline-flex; align-items: center; flex: 0 0 auto; }
 .brand-logo { display: block; width: 196px; height: 52px; object-fit: contain; }
-.brand-header { flex-direction: column; gap: 2px; color: var(--blue); }
+.brand-header { flex-direction: column; gap: 4px; color: var(--blue); }
 .brand-header .brand-logo { width: clamp(190px, 24vw, 258px); height: auto; }
-.brand-descriptor { font-size: clamp(9.5px, 1.1vw, 12.5px); font-weight: 800; line-height: 1.2; letter-spacing: .035em; text-transform: uppercase; }
+.brand-descriptor { font-size: clamp(12px, 1.5vw, 16px); font-weight: 800; line-height: 1.2; text-align: center; }
 .main-nav { display: flex; align-items: center; justify-content: flex-end; gap: 12px; color: var(--blue); font-size: 15px; font-weight: 600; }
 .main-nav > a:not(.nav-cta), .nav-products summary { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; padding: 0 18px; border: 1px solid var(--blue); border-radius: 8px; background: var(--white); color: var(--blue); white-space: nowrap; transition: background-color .18s ease, border-color .18s ease; }
 .main-nav > a:not(.nav-cta):hover, .main-nav > a:not(.nav-cta):focus-visible, .nav-products summary:hover, .nav-products summary:focus-visible, .nav-products[open] summary { background: var(--blue-soft); border-color: var(--blue-hover); color: var(--blue-hover); }

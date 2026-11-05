@@ -129,6 +129,10 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 .feature-info h3 { color: var(--blue); margin: 0 0 17px; font: 700 var(--title-product)/1.12 var(--display); letter-spacing: -.03em; text-transform: none; text-wrap: balance; }
 .feature-info p { max-width: 430px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.75; }
 .feature-info p + p { margin-top: 13px; }
+.product-specs { display: grid; gap: 8px; width: 100%; max-width: 430px; margin: 0; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 16px; line-height: 1.75; }
+.product-specs > div { min-width: 0; }
+.product-specs dt { display: inline; color: var(--ink); font-weight: 700; }
+.product-specs dd { display: inline; margin: 0; }
 .button-light { background: #f1f3f3; color: var(--ink); }
 .button-light:hover { background: var(--white); }
 

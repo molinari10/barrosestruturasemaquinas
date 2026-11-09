@@ -147,9 +147,9 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 .trailer-slide { position: absolute; inset: 0; margin: 0; }
 .trailer-slide[hidden] { display: none; }
 .trailer-slide img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.trailer-slide[data-orientation="portrait"] img { object-fit: contain; background: #dfe6f5; }
+.trailer-slide[data-orientation="portrait"] img, .trailer-slide[data-orientation="wide"] img { object-fit: contain; background: #dfe6f5; }
 .trailer-gallery-count { position: absolute; right: 16px; bottom: 16px; padding: 7px 10px; background: rgba(35,75,168,.94); color: var(--white); font-size: 13px; font-variant-numeric: tabular-nums; }
-.trailer-thumbnails { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+.trailer-thumbnails { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
 .trailer-thumbnails button { display: block; aspect-ratio: 4 / 3; overflow: hidden; padding: 0; border: 2px solid transparent; background: #dfe6f5; cursor: pointer; }
 .trailer-thumbnails button.is-active { border-color: var(--blue); }
 .trailer-thumbnails button img { display: block; width: 100%; height: 100%; object-fit: cover; }

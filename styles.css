@@ -195,8 +195,7 @@ h1 em, h2 em { color: inherit; font-style: normal; }
 .trailer-copy p,
 .hydraulic-service-info p,
 .deliveries .copy p {
-  text-align: justify;
-  text-align-last: start;
+  text-align: start;
   -webkit-hyphens: none;
   hyphens: none;
   word-break: normal;

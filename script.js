@@ -195,7 +195,31 @@ if (deliveryGallery) {
 const carousel = document.querySelector('#product-carousel');
 
 if (carousel) {
-  const slides = [...carousel.querySelectorAll('.carousel-slide')];
+
+  const originals = [...carousel.querySelectorAll('.carousel-slide')];
+  const gallerySelectors = ['#conchas .feature-slide img', '#carretas .trailer-slide img', '#mangueiras .hydraulic-slide img'];
+  const photosByProduct = originals.map((slide, product) => {
+    const originalImage = slide.querySelector('img');
+    const photos = [{ product, slide, image: originalImage }];
+    const seen = new Set([originalImage.src]);
+    for (const image of document.querySelectorAll(gallerySelectors[product])) {
+      if (seen.has(image.src)) continue;
+      seen.add(image.src);
+      photos.push({ product, image });
+    }
+    return photos;
+  });
+  const slides = [];
+  const rounds = Math.max(...photosByProduct.map(photos => photos.length));
+  for (let round = 0; round < rounds; round++) {
+    for (const photos of photosByProduct) {
+      if (photos[round]) slides.push(photos[round]);
+    }
+  }
+  const container = carousel.querySelector('.carousel-slides');
+  let request = 0;
+  let requestedIndex = 0;
+
   const indicators = [...carousel.querySelectorAll('.carousel-indicator')];
   const counter = carousel.querySelector('[data-carousel-count]');
   const heroTitle = document.querySelector('[data-hero-title]');
@@ -232,20 +256,44 @@ if (carousel) {
   let timer;
   let paused = false;
 
-  const showSlide = (index) => {
-    activeIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => {
-      const active = slideIndex === activeIndex;
-      slide.classList.toggle('is-active', active);
-      slide.setAttribute('aria-hidden', String(!active));
-    });
+  const showSlide = async (index) => {
+    const next = (index + slides.length) % slides.length;
+    requestedIndex = next;
+    const currentRequest = ++request;
+    const photo = slides[next];
+    if (!photo.slide) {
+      const slide = originals[photo.product].cloneNode(true);
+      slide.classList.remove('is-active');
+      slide.dataset.carouselProduct = photo.product;
+      slide.setAttribute('aria-hidden', 'true');
+      slide.setAttribute('aria-label', photo.image.alt);
+      const image = photo.image.cloneNode();
+      image.removeAttribute('loading');
+      image.removeAttribute('id');
+      slide.querySelector('img').replaceWith(image);
+      photo.slide = slide;
+      container.append(slide);
+    }
+    try {
+      await photo.slide.querySelector('img').decode();
+    } catch {
+      return;
+    }
+    if (currentRequest !== request) return;
+    activeIndex = next;
+    for (const item of slides) {
+      if (!item.slide) continue;
+      const active = item === photo;
+      item.slide.classList.toggle('is-active', active);
+      item.slide.setAttribute('aria-hidden', String(!active));
+    }
     indicators.forEach((indicator, indicatorIndex) => {
-      const active = indicatorIndex === activeIndex;
+      const active = indicatorIndex === photo.product;
       indicator.classList.toggle('is-active', active);
       indicator.setAttribute('aria-current', String(active));
     });
-    counter.textContent = String(activeIndex + 1).padStart(2, '0');
-    const copy = productCopy[activeIndex];
+    counter.textContent = String(photo.product + 1).padStart(2, '0');
+    const copy = productCopy[photo.product];
     heroTitle.textContent = copy.title;
     heroEmphasis.textContent = copy.emphasis;
     heroDescription.textContent = copy.description;
@@ -258,22 +306,29 @@ if (carousel) {
   const startTimer = () => {
     stopTimer();
     if (!paused && !prefersReducedMotion && !document.hidden) {
-      timer = window.setInterval(() => showSlide(activeIndex + 1), 4500);
+      timer = window.setInterval(() => showSlide(requestedIndex + 1), 4500);
     }
   };
 
   indicators.forEach((indicator) => {
     indicator.addEventListener('click', () => {
-      showSlide(Number(indicator.dataset.carouselTo));
+      const product = Number(indicator.dataset.carouselTo);
+      for (let offset = 1; offset <= slides.length; offset++) {
+        const next = (activeIndex + offset) % slides.length;
+        if (slides[next].product === product) {
+          showSlide(next);
+          break;
+        }
+      }
       startTimer();
     });
   });
   carousel.querySelector('[data-carousel-prev]').addEventListener('click', () => {
-    showSlide(activeIndex - 1);
+    showSlide(requestedIndex - 1);
     startTimer();
   });
   carousel.querySelector('[data-carousel-next]').addEventListener('click', () => {
-    showSlide(activeIndex + 1);
+    showSlide(requestedIndex + 1);
     startTimer();
   });
   carousel.addEventListener('mouseenter', () => { paused = true; stopTimer(); });

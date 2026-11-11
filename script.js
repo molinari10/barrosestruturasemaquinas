@@ -202,6 +202,7 @@ if (carousel) {
   const heroEmphasis = document.querySelector('[data-hero-emphasis]');
   const heroDescription = document.querySelector('[data-hero-description]');
   const heroProductLink = document.querySelector('[data-hero-product-link]');
+  const heroQuoteLink = document.querySelector('[data-hero-quote-link]');
   const heroLinkLabel = document.querySelector('[data-hero-link-label]');
   const productCopy = [
     {
@@ -250,6 +251,7 @@ if (carousel) {
     heroDescription.textContent = copy.description;
     heroLinkLabel.textContent = copy.linkLabel;
     heroProductLink.href = copy.href;
+    heroQuoteLink.href = document.querySelector(`${copy.href} [data-quote-link]`).href;
   };
 
   const stopTimer = () => window.clearInterval(timer);
